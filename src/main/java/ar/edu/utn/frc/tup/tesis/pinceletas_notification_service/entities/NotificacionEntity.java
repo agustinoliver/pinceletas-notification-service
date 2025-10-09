@@ -1,0 +1,54 @@
+package ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.entities;
+
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "notificaciones")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+public class NotificacionEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false)
+    private String titulo;
+
+    @Column(nullable = false, length = 1000)
+    private String mensaje;
+
+    @Column(nullable = false)
+    private String tipo; // ORDEN, SISTEMA, PROMOCION, etc.
+
+    @Column(nullable = false)
+    private String estado = "NO_LEIDA"; // LEIDA, NO_LEIDA
+
+    @Column(nullable = false)
+    private Long usuarioId; // ID del usuario destinatario
+
+    private String metadata; // Datos adicionales en JSON
+
+    @CreationTimestamp
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime fechaCreacion;
+
+    private LocalDateTime fechaLectura;
+
+    // Constructor para crear notificaciones fácilmente
+    public NotificacionEntity(String titulo, String mensaje, String tipo, Long usuarioId, String metadata) {
+        this.titulo = titulo;
+        this.mensaje = mensaje;
+        this.tipo = tipo;
+        this.usuarioId = usuarioId;
+        this.metadata = metadata;
+        this.estado = "NO_LEIDA";
+    }
+}

@@ -1,0 +1,100 @@
+package ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.services;
+
+
+import ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.dtos.CrearNotificacionRequest;
+import ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.dtos.NotificacionDto;
+import ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.entities.NotificacionEntity;
+import ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.repositories.NotificacionRepository;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@RequiredArgsConstructor
+@Slf4j
+public class NotificacionService {
+
+    private final NotificacionRepository notificacionRepository;
+    private final ModelMapper modelMapper;
+
+    public List<NotificacionDto> obtenerNotificacionesPorUsuario(Long usuarioId) {
+        log.info("Obteniendo notificaciones para usuario: {}", usuarioId);
+        return notificacionRepository.findByUsuarioIdOrderByFechaCreacionDesc(usuarioId)
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<NotificacionDto> obtenerNotificacionesNoLeidas(Long usuarioId) {
+        log.info("Obteniendo notificaciones no leídas para usuario: {}", usuarioId);
+        return notificacionRepository.findByUsuarioIdAndEstadoOrderByFechaCreacionDesc(usuarioId, "NO_LEIDA")
+                .stream()
+                .map(this::convertToDto)
+                .collect(Collectors.toList());
+    }
+
+    public Long contarNotificacionesNoLeidas(Long usuarioId) {
+        log.info("Contando notificaciones no leídas para usuario: {}", usuarioId);
+        return notificacionRepository.countByUsuarioIdAndEstado(usuarioId, "NO_LEIDA");
+    }
+
+    @Transactional
+    public NotificacionDto crearNotificacion(CrearNotificacionRequest request) {
+        log.info("Creando notificación: {} para usuario: {}", request.getTitulo(), request.getUsuarioId());
+
+        NotificacionEntity notificacion = new NotificacionEntity(
+                request.getTitulo(),
+                request.getMensaje(),
+                request.getTipo(),
+                request.getUsuarioId(),
+                request.getMetadata()
+        );
+
+        NotificacionEntity saved = notificacionRepository.save(notificacion);
+        log.info("Notificación creada con ID: {}", saved.getId());
+
+        return convertToDto(saved);
+    }
+
+    @Transactional
+    public void marcarComoLeida(Long id, Long usuarioId) {
+        log.info("Marcando notificación {} como leída para usuario: {}", id, usuarioId);
+        notificacionRepository.marcarComoLeida(id, usuarioId);
+    }
+
+    @Transactional
+    public void marcarTodasComoLeidas(Long usuarioId) {
+        log.info("Marcando todas las notificaciones como leídas para usuario: {}", usuarioId);
+        notificacionRepository.marcarTodasComoLeidas(usuarioId);
+    }
+
+    @Transactional
+    public void eliminarNotificacion(Long id, Long usuarioId) {
+        log.info("Eliminando notificación {} para usuario: {}", id, usuarioId);
+        notificacionRepository.deleteByIdAndUsuarioId(id, usuarioId);
+    }
+
+    // Método para procesar eventos de otros servicios
+    @Transactional
+    public void procesarEventoNotificacion(String titulo, String mensaje, String tipo, Long usuarioId, String metadata) {
+        log.info("Procesando evento de notificación - Tipo: {}, Usuario: {}", tipo, usuarioId);
+
+        CrearNotificacionRequest request = new CrearNotificacionRequest();
+        request.setTitulo(titulo);
+        request.setMensaje(mensaje);
+        request.setTipo(tipo);
+        request.setUsuarioId(usuarioId);
+        request.setMetadata(metadata);
+
+        crearNotificacion(request);
+    }
+
+    private NotificacionDto convertToDto(NotificacionEntity entity) {
+        return modelMapper.map(entity, NotificacionDto.class);
+    }
+}
