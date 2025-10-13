@@ -1,0 +1,114 @@
+package ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.dtos;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
+
+
+public class NotificacionDto {
+
+    private Long id;
+    private String titulo;
+    private String mensaje;
+    private String tipo;
+    private String estado;
+    private Long usuarioId;
+    private String metadata;
+    private LocalDateTime fechaCreacion;
+    private LocalDateTime fechaLectura;
+
+    // Constructor vacío
+    public NotificacionDto() {
+    }
+
+    // Constructor completo
+    public NotificacionDto(Long id, String titulo, String mensaje, String tipo, String estado,
+                           Long usuarioId, String metadata, LocalDateTime fechaCreacion, LocalDateTime fechaLectura) {
+        this.id = id;
+        this.titulo = titulo;
+        this.mensaje = mensaje;
+        this.tipo = tipo;
+        this.estado = estado;
+        this.usuarioId = usuarioId;
+        this.metadata = metadata;
+        this.fechaCreacion = fechaCreacion;
+        this.fechaLectura = fechaLectura;
+    }
+
+    // Getters y Setters
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public Long getUsuarioId() {
+        return usuarioId;
+    }
+
+    public void setUsuarioId(Long usuarioId) {
+        this.usuarioId = usuarioId;
+    }
+
+    public String getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(String metadata) {
+        this.metadata = metadata;
+    }
+
+    public LocalDateTime getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(LocalDateTime fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public LocalDateTime getFechaLectura() {
+        return fechaLectura;
+    }
+
+    public void setFechaLectura(LocalDateTime fechaLectura) {
+        this.fechaLectura = fechaLectura;
+    }
+}
+

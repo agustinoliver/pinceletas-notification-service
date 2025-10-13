@@ -3,7 +3,6 @@ package ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
 @Data
@@ -20,4 +19,7 @@ public class NotificacionDto {
     private String metadata;
     private LocalDateTime fechaCreacion;
     private LocalDateTime fechaLectura;
+
+
 }
+

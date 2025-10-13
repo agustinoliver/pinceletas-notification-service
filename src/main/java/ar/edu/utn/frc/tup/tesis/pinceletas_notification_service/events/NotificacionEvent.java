@@ -11,8 +11,8 @@ public class NotificacionEvent {
 
     private String titulo;
     private String mensaje;
-    private String tipo; // BIENVENIDA, NUEVO_REGISTRO, etc.
+    private String tipo;
     private Long usuarioId;
-    private String metadata; // JSON con datos adicionales
-    private String targetRole; // USER, ADMIN, ALL - para filtrar destinatarios
+    private String metadata;
+    private String targetRole;
 }

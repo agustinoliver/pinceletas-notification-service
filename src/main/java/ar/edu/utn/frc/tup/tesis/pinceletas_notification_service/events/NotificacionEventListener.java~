@@ -31,7 +31,7 @@ public class NotificacionEventListener {
 
         try {
             if ("USER".equals(event.getTargetRole()) && event.getUsuarioId() != null) {
-                // ✅ CORRECTO: Notificación para USUARIO específico (LOGIN)
+                // 🔴 CORREGIDO: Notificación para USUARIO específico (LOGIN)
                 // El usuarioId del evento es el ID del usuario que inició sesión
                 notificacionService.procesarEventoNotificacion(
                         event.getTitulo(),
@@ -43,7 +43,8 @@ public class NotificacionEventListener {
                 log.info("✅ Notificacion USER procesada para usuario: {}", event.getUsuarioId());
             }
             else if ("ADMIN".equals(event.getTargetRole())) {
-                // ✅ CORREGIDO: Notificación para ADMIN (NUEVO REGISTRO)
+                // 🔴 CORREGIDO: Notificación para ADMIN (NUEVO REGISTRO)
+                // El metadata contiene el usuarioId del nuevo usuario registrado
                 enviarNotificacionATodosLosAdmins(event);
                 log.info("✅ Notificacion ADMIN procesada");
             }
@@ -71,7 +72,7 @@ public class NotificacionEventListener {
                     event.getTitulo(),
                     event.getMensaje(),
                     event.getTipo(),
-                    adminId, // ✅ Usar el ID del admin
+                    adminId, // ✅ Usar el ID del admin, no el del usuario registrado
                     event.getMetadata()
             );
         }

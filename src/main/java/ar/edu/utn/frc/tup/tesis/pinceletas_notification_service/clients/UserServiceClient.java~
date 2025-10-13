@@ -1,0 +1,20 @@
+package ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.clients;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
+
+@Component
+@RequiredArgsConstructor
+public class UserServiceClient {
+
+    @GetMapping("/api/users/by-email")
+    UserBasicInfo getUserByEmail(@RequestParam String email);
+
+    record UserBasicInfo(Long id, String email, String nombre, String apellido, String role) {}
+}

@@ -26,15 +26,15 @@ public class NotificacionEntity {
     private String mensaje;
 
     @Column(nullable = false)
-    private String tipo; // ORDEN, SISTEMA, PROMOCION, etc.
+    private String tipo;
 
     @Column(nullable = false)
-    private String estado = "NO_LEIDA"; // LEIDA, NO_LEIDA
+    private String estado = "NO_LEIDA";
 
     @Column(nullable = false)
-    private Long usuarioId; // ID del usuario destinatario
+    private Long usuarioId;
 
-    private String metadata; // Datos adicionales en JSON
+    private String metadata;
 
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
@@ -42,7 +42,7 @@ public class NotificacionEntity {
 
     private LocalDateTime fechaLectura;
 
-    // Constructor para crear notificaciones fácilmente
+    // Constructor adicional para crear notificaciones fácilmente
     public NotificacionEntity(String titulo, String mensaje, String tipo, Long usuarioId, String metadata) {
         this.titulo = titulo;
         this.mensaje = mensaje;

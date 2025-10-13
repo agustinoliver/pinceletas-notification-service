@@ -14,5 +14,4 @@ public class PinceletasNotificationServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(PinceletasNotificationServiceApplication.class, args);
 	}
-
 }

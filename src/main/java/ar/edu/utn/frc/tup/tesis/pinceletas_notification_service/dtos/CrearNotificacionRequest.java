@@ -14,5 +14,7 @@ public class CrearNotificacionRequest {
     private String tipo;
     private Long usuarioId;
     private String metadata;
+
+
 }
 
