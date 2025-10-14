@@ -56,11 +56,4 @@ public class NotificacionController {
         notificacionService.eliminarNotificacion(id, usuarioId);
         return ResponseEntity.ok().build();
     }
-
-//    // 🔥 NUEVO: Endpoint para crear notificaciones manualmente (útil para testing)
-//    @PostMapping
-//    @Operation(summary = "Crear notificación manualmente")
-//    public ResponseEntity<NotificacionDto> crearNotificacion(@RequestBody ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.dtos.CrearNotificacionRequest request) {
-//        return ResponseEntity.ok(notificacionService.crearNotificacion(request));
-//    }
 }
