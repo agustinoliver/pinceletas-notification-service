@@ -1,10 +1,17 @@
 package ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
+/**
+ * Entidad que representa una notificación en el sistema.
+ * Almacena información de notificaciones para usuarios con estado de lectura.
+ */
 @Entity
 @Table(name = "notificaciones")
 @Data

@@ -13,16 +13,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NotificacionEvent {
 
-    /** Título de la notificación. */
     private String titulo;
-    /** Mensaje detallado de la notificación. */
     private String mensaje;
-    /** Tipo de notificación. */
     private String tipo;
-    /** ID del usuario destinatario (para notificaciones individuales). */
     private Long usuarioId;
-    /** Metadatos adicionales en formato JSON. */
     private String metadata;
-    /** Rol objetivo (USER para individual, ADMIN para broadcast a administradores). */
     private String targetRole;
 }

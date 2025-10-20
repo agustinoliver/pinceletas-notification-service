@@ -16,22 +16,12 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringDocConfig {
 
-    /** Nombre del desarrollador obtenido de properties. */
     @Value("${app.dev-name}")
     private String devName;
 
-    /** Email del desarrollador obtenido de properties. */
     @Value("${app.dev-email}")
     private String devEmail;
 
-    /**
-     * Configura la especificación OpenAPI para documentación.
-     *
-     * @param appName Nombre de la aplicación desde properties.
-     * @param appDescription Descripción de la aplicación desde properties.
-     * @param appVersion Versión de la aplicación desde properties.
-     * @return OpenAPI configurado con metadatos del servicio.
-     */
     @Bean
     public OpenAPI openApi(
             @Value("${app.name}") String appName,
@@ -52,12 +42,6 @@ public class SpringDocConfig {
         // Se quitó la seguridad JWT
     }
 
-    /**
-     * Configura el resolver de modelos para Swagger usando ObjectMapper personalizado.
-     *
-     * @param objectMapper ObjectMapper configurado en la aplicación.
-     * @return ModelResolver para procesamiento de esquemas en Swagger.
-     */
     @Bean
     public ModelResolver modelResolver(ObjectMapper objectMapper) {
         return new ModelResolver(objectMapper);

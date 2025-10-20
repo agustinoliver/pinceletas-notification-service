@@ -21,14 +21,6 @@ import java.util.List;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    /**
-     * Configura la cadena de filtros de seguridad.
-     * Permite acceso público a todos los endpoints de notificaciones y documentación.
-     *
-     * @param http Configurador de seguridad HTTP.
-     * @return SecurityFilterChain configurado.
-     * @throws Exception Si ocurre error en la configuración.
-     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -49,11 +41,6 @@ public class SecurityConfig {
         return http.build();
     }
 
-    /**
-     * Configuración CORS para permitir requests desde el frontend.
-     *
-     * @return CorsConfigurationSource con políticas CORS definidas.
-     */
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();

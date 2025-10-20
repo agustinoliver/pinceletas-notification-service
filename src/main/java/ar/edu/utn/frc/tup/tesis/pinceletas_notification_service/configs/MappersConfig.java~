@@ -1,7 +1,0 @@
-package ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.configs;
-
-import org.springframework.context.annotation.Configuration;
-
-@Configuration
-public class MappersConfig {
-}

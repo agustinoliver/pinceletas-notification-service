@@ -9,14 +9,25 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Servicio para gestión de administradores.
+ * Proporciona funcionalidades para obtener información de administradores del sistema.
+ */
 @Service
 @RequiredArgsConstructor
 public class AdminService {
 
     private static final Logger log = LoggerFactory.getLogger(AdminService.class);
 
+    /** Cliente para comunicación con el servicio de usuarios. */
     private final UserServiceClient userServiceClient;
 
+    /**
+     * Obtiene los IDs de todos los administradores del sistema.
+     * Actualmente busca un administrador específico por email hardcodeado.
+     *
+     * @return Lista de IDs de administradores.
+     */
     public List<Long> obtenerIdsDeAdministradores() {
         log.info("🔍 Buscando IDs de administradores dinámicamente");
 

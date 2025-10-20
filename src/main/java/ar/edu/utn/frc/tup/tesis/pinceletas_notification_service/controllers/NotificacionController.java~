@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controlador REST para gestión de notificaciones de usuarios.
+ * Proporciona endpoints para obtener, marcar y eliminar notificaciones.
+ */
 @RestController
 @RequestMapping("/notificaciones")
 @Tag(name = "Notificaciones", description = "API para gestión de notificaciones de usuarios")
@@ -56,4 +60,11 @@ public class NotificacionController {
         notificacionService.eliminarNotificacion(id, usuarioId);
         return ResponseEntity.ok().build();
     }
+
+//    // 🔥 NUEVO: Endpoint para crear notificaciones manualmente (útil para testing)
+//    @PostMapping
+//    @Operation(summary = "Crear notificación manualmente")
+//    public ResponseEntity<NotificacionDto> crearNotificacion(@RequestBody ar.edu.utn.frc.tup.tesis.pinceletas_notification_service.dtos.CrearNotificacionRequest request) {
+//        return ResponseEntity.ok(notificacionService.crearNotificacion(request));
+//    }
 }

@@ -8,14 +8,30 @@ import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuración de mapeadores para la aplicación.
+ * Define beans para ModelMapper y ObjectMapper con configuraciones específicas.
+ */
 @Configuration
 public class MappersConfig {
 
+    /**
+     * Bean principal de ModelMapper para conversiones entre entidades y DTOs.
+     * Configuración estándar sin condiciones especiales.
+     *
+     * @return Instancia configurada de ModelMapper.
+     */
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
 
+    /**
+     * Bean especializado de ModelMapper para operaciones de fusión (merge).
+     * Solo copia propiedades que no son nulas, útil para actualizaciones parciales.
+     *
+     * @return ModelMapper configurado para ignorar propiedades nulas.
+     */
     @Bean("mergerMapper")
     public ModelMapper mergerMapper() {
         ModelMapper mapper = new ModelMapper();
@@ -23,6 +39,12 @@ public class MappersConfig {
         return mapper;
     }
 
+    /**
+     * Bean de ObjectMapper para serialización/deserialización JSON.
+     * Configurado para soportar Java Time API y evitar timestamps en fechas.
+     *
+     * @return ObjectMapper configurado para el sistema.
+     */
     @Bean
     public ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();

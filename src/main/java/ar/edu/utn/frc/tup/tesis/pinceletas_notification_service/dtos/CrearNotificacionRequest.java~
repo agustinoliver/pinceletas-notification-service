@@ -4,7 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
+/**
+ * DTO para solicitud de creación de notificaciones.
+ * Utilizado para crear notificaciones manualmente o mediante eventos.
+ */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class CrearNotificacionRequest {
 
     private String titulo;
@@ -13,6 +19,6 @@ public class CrearNotificacionRequest {
     private Long usuarioId;
     private String metadata;
 
-    
+
 }
 

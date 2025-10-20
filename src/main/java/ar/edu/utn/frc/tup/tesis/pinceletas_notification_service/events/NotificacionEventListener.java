@@ -10,12 +10,18 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Consumidor de eventos de notificación desde RabbitMQ.
+ * Escucha la cola de notificaciones y procesa los eventos según su tipo y destino.
+ */
 @Component
 public class NotificacionEventListener {
 
     private static final Logger log = LoggerFactory.getLogger(NotificacionEventListener.class);
 
+    /** Servicio de notificaciones para almacenamiento. */
     private final NotificacionService notificacionService;
+    /** Servicio de administradores para notificaciones broadcast. */
     private final AdminService adminService;
 
     public NotificacionEventListener(NotificacionService notificacionService,
@@ -24,6 +30,12 @@ public class NotificacionEventListener {
         this.adminService = adminService;
     }
 
+    /**
+     * Escucha y procesa eventos de notificación desde RabbitMQ.
+     * Distingue entre notificaciones para usuarios individuales y broadcast para administradores.
+     *
+     * @param event Evento de notificación recibido.
+     */
     @RabbitListener(queues = "notificaciones.queue")
     public void recibirNotificacion(NotificacionEvent event) {
         log.info("🎯 Evento recibido de RabbitMQ - Tipo: {}, Target: {}", event.getTipo(), event.getTargetRole());
@@ -31,19 +43,20 @@ public class NotificacionEventListener {
 
         try {
             if ("USER".equals(event.getTargetRole()) && event.getUsuarioId() != null) {
-                // ✅ CORRECTO: Notificación para USUARIO específico (LOGIN)
-                // El usuarioId del evento es el ID del usuario que inició sesión
+                // ✅ Notificación para USUARIO específico
+                // Casos: INICIO_SESION, INICIO_SESION_FIREBASE, BIENVENIDA_REGISTRO, ESTADO_PEDIDO
                 notificacionService.procesarEventoNotificacion(
                         event.getTitulo(),
                         event.getMensaje(),
                         event.getTipo(),
-                        event.getUsuarioId(), // ✅ Usar el usuarioId del evento
+                        event.getUsuarioId(),
                         event.getMetadata()
                 );
                 log.info("✅ Notificacion USER procesada para usuario: {}", event.getUsuarioId());
             }
             else if ("ADMIN".equals(event.getTargetRole())) {
-                // ✅ CORREGIDO: Notificación para ADMIN (NUEVO REGISTRO)
+                // ✅ Notificación para TODOS los ADMINS
+                // Casos: NUEVO_REGISTRO, INICIO_SESION_FIREBASE_ADMIN, NUEVO_PEDIDO
                 enviarNotificacionATodosLosAdmins(event);
                 log.info("✅ Notificacion ADMIN procesada");
             }
@@ -55,6 +68,12 @@ public class NotificacionEventListener {
         }
     }
 
+    /**
+     * Envía una notificación a todos los administradores del sistema.
+     * Obtiene la lista de IDs de administradores y crea una notificación para cada uno.
+     *
+     * @param event Evento de notificación a distribuir.
+     */
     private void enviarNotificacionATodosLosAdmins(NotificacionEvent event) {
         List<Long> adminUserIds = adminService.obtenerIdsDeAdministradores();
 
@@ -66,12 +85,12 @@ public class NotificacionEventListener {
         log.info("👨‍💼 Enviando notificación a {} administradores", adminUserIds.size());
 
         for (Long adminId : adminUserIds) {
-            // ✅ CORREGIDO: Cada admin recibe la notificación con SU propio ID
+            // ✅ Cada admin recibe la notificación con SU propio ID
             notificacionService.procesarEventoNotificacion(
                     event.getTitulo(),
                     event.getMensaje(),
                     event.getTipo(),
-                    adminId, // ✅ Usar el ID del admin
+                    adminId,
                     event.getMetadata()
             );
         }

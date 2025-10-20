@@ -6,6 +6,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * Controlador para endpoints de health check y monitoreo.
+ * Proporciona endpoints simples para verificar el estado del servicio.
+ */
 @RestController
 public class HealthController {
+
+    /**
+     * Controlador para endpoints de health check y monitoreo.
+     * Proporciona endpoints simples para verificar el estado del servicio.
+     */
 }
