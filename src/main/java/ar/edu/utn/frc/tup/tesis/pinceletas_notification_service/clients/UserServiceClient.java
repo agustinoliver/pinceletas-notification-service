@@ -18,7 +18,7 @@ public class UserServiceClient {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    @Value("${app.services.user-auth-service.url:http://localhost:8081}")
+    @Value("${app.services.user-auth-service.url:https://pinceletas-user-auth.onrender.com}")
     private String userServiceUrl;
 
     public UserBasicInfo getUserByEmail(String email) {
